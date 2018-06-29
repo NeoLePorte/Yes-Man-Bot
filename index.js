@@ -22,7 +22,8 @@ bot.on('message', async message => {
     let args = messageArray.slice(1);
 
     //ping pongs hello
-    if (cmd === `${prefix}hello`) return message.channel.send("Hello! Type `!help` for....help🤖");
+    const codsworth = bot.emojis.find("name", "codsworth");
+    if (cmd === `${prefix}hello`) return message.channel.send("Hello! Type `!help` for....help" + codsworth);
 
     //bot info embed
     if (cmd === `${prefix}botinfo`) {
@@ -50,20 +51,19 @@ bot.on('message', async message => {
     if (cmd === `${prefix}training`) {
         let bicon = bot.user.displayAvatarURL;
         let trainingEmbed = new Discord.RichEmbed()
-        .setAuthor("Follow the link for more information")
-        .setDescription(`https://www.youtube.com/watch?v=26UDmZRCbm0`)
-        .addField("Training Map", "https://www.roblox.com/games/2007834554/new-NCR-training-camp")
+        .setTitle("Training Video")
+        .setURL('https://www.youtube.com/watch?v=26UDmZRCbm0')
+        .setDescription(`Training video and map to up your knowledge/skills with`)
+        .addField("Training Map", "https://www.roblox.com/games/1881288112/NCR-enlisting-training")
         .setColor("#42f47a")
         .setThumbnail(bicon)
         .setImage("https://static.giantbomb.com/uploads/original/0/4527/1707586-1.jpg")
-        .addField("Info", "Short video to prepare you for the wasteland")
 
         return message.channel.send(trainingEmbed);
     }
     //Lists all custom emojis
     if (cmd === `${prefix}emoji`) {
         const emojiList = message.guild.emojis.map( e => `${e.toString()}, ` ).join(" ");
-        console.log(emojiList)
         let trainingEmbed = new Discord.RichEmbed()
         .setAuthor("Emoji Commands (hover emoji for command)")
         .setDescription(`${emojiList}`)
@@ -76,13 +76,13 @@ bot.on('message', async message => {
     //Request random fallout gif.
     if (cmd === `${prefix}gifallout`) {
         const gif = GphApiClient(tokenFile.GIF_API)
-        gif.translate('gifs', {"s": 'Fallout Game'})
+        gif.translate('gifs', {"s": 'Fallout'})
         .then(res => {
             let gifallout = res.data.images.downsized.gif_url
             let bicon = bot.user.displayAvatarURL;
             let gifEmbed = new Discord.RichEmbed()
             .setAuthor("Yes Man Gif Generator")
-            .setDescription(`GIFALLOUT`)
+            .setDescription(`Here Ya Go!`)
             .setColor("#42f47a")
             .setThumbnail(bicon)
             .setImage(`${gifallout}`)
@@ -95,16 +95,16 @@ bot.on('message', async message => {
         (async function () {
             const res = await fetch("https://api.roblox.com/groups/576620");
             const Guild = await res.json();
-            const Roles = Guild.Roles.map(r => `Name: ${r.Name}, Rank: ${r.Rank} ---`)
-            console.log(Guild);
+            const Roles = Guild.Roles.map(r => `Name: ${r.Name} , Rank: ${r.Rank} ---   `)
             let bicon = bot.user.displayAvatarURL;
             let gifEmbed = new Discord.RichEmbed()
-            .setAuthor(`${Guild.Name}`)
+            .setTitle(`${Guild.Name}`)
+            .setURL('https://www.roblox.com/My/Groups.aspx?gid=576620')
             .setDescription(`${Guild.Description}`)
             .setColor("#42f47a")
             .setThumbnail(bicon)
             .setFooter(`Guild Owner: ${Guild.Owner.Name}`)
-            .addField("Roles", `${Roles}`)
+            .addField("Roles =============================", `${Roles}`)
             .setImage(`https://i.imgur.com/NPZImHz.jpg`)
 
         return message.channel.send(gifEmbed);

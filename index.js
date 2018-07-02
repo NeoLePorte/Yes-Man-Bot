@@ -1,6 +1,5 @@
 const botConfig = require('./botconfig.json');
 const Discord = require('discord.js');
-const tokenFile = require('./tokenFile.json')
 const GphApiClient = require('giphy-js-sdk-core');
 const fetch = require('node-fetch');
 
@@ -75,7 +74,7 @@ bot.on('message', async message => {
     }
     //Request random fallout gif.
     if (cmd === `${prefix}gifallout`) {
-        const gif = GphApiClient(tokenFile.GIF_API)
+        const gif = GphApiClient(process.env.GIF_API)
         gif.translate('gifs', {"s": 'Fallout Game'})
         .then(res => {
             let gifallout = res.data.images.downsized.gif_url
@@ -134,4 +133,4 @@ bot.on('message', async message => {
   });
 
 
-bot.login(tokenFile.token)
+bot.login(process.env.token)

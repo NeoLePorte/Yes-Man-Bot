@@ -76,7 +76,7 @@ bot.on('message', async message => {
     //Request random fallout gif.
     if (cmd === `${prefix}gifallout`) {
         const gif = GphApiClient(tokenFile.GIF_API)
-        gif.translate('gifs', {"s": 'Fallout'})
+        gif.translate('gifs', {"s": 'Fallout Game'})
         .then(res => {
             let gifallout = res.data.images.downsized.gif_url
             let bicon = bot.user.displayAvatarURL;

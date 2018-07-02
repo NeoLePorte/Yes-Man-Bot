@@ -1,3 +1,2 @@
-config.js
-tokenFile.json
+.env
 node_modules

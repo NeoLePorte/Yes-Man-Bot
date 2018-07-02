@@ -2,7 +2,7 @@ const botConfig = require('./botconfig.json');
 const Discord = require('discord.js');
 const GphApiClient = require('giphy-js-sdk-core');
 const fetch = require('node-fetch');
-
+require('dotenv');
 
 const bot = new Discord.Client({disableEveryone: true});
 
@@ -131,6 +131,5 @@ bot.on('message', async message => {
     channel.send(welcomeEmbed);
     console.log("greeting sent")
   });
-
 
 bot.login(process.env.token)

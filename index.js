@@ -1,8 +1,11 @@
+require('dotenv').config();
 const botConfig = require('./botconfig.json');
 const Discord = require('discord.js');
 const GphApiClient = require('giphy-js-sdk-core');
 const fetch = require('node-fetch');
-require('dotenv');
+const list = require('badwords-list');
+const badWords = list.array;
+
 
 const bot = new Discord.Client({disableEveryone: true});
 
@@ -19,6 +22,24 @@ bot.on('message', async message => {
     let messageArray = message.content.split(" ");
     let cmd = messageArray[0];
     let args = messageArray.slice(1);
+    let sender = message.author;
+
+    //Profanity filter
+    messageArray.forEach(m => {
+        badWords.forEach(p => {
+        if (m.toUpperCase() === p.toUpperCase()) {
+            let bicon = bot.user.displayAvatarURL;
+            let profanityFilter = new Discord.RichEmbed()
+            .setAuthor('OH NO!')
+            .setDescription(`Hey, ${sender}! Comments that contain profanity are automatically modified/deleted. Please refrain from explicit or offensive words while in public channels. If you feel this deletion was in error please contact the admin.`)
+            .setColor("#f44248")
+            .setThumbnail(bicon)
+            .setImage('https://i.imgur.com/O1VBW37.png')
+            message.delete()
+            return message.channel.send(profanityFilter);
+        }
+    })
+})
 
     //ping pongs hello
     const codsworth = bot.emojis.find("name", "codsworth");
@@ -74,7 +95,7 @@ bot.on('message', async message => {
     }
     //Request random fallout gif.
     if (cmd === `${prefix}gifallout`) {
-        const gif = GphApiClient(process.env.GIF_API)
+        const gif = await GphApiClient(process.env.GIF_API)
         gif.translate('gifs', {"s": 'Fallout Game'})
         .then(res => {
             let gifallout = res.data.images.downsized.gif_url
@@ -131,5 +152,4 @@ bot.on('message', async message => {
     channel.send(welcomeEmbed);
     console.log("greeting sent")
   });
-
-bot.login(process.env.token)
+bot.login(process.env.TOKEN)

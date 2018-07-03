@@ -10,9 +10,11 @@
   "author": "devcrvft",
   "license": "MIT",
   "dependencies": {
+    "badwords-list": "^1.0.0",
     "discord.js": "^11.3.2",
     "dotenv": "^6.0.0",
     "giphy-js-sdk-core": "^1.0.3",
-    "node-fetch": "^2.1.2"
+    "node-fetch": "^2.1.2",
+    "profanities": "^2.6.0"
   }
 }
